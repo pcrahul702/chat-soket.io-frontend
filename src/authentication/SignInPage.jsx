@@ -2,23 +2,30 @@ import React, { useState } from "react";
 import logo from "../../src/logo.png";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
-import { getAuth, signInWithEmailAndPassword ,GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 export const SignInPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [error, setError] = useState("");
   const SignIn = async (e) => {
     e.preventDefault();
     try {
       const auth = getAuth();
-      const result= await signInWithEmailAndPassword(auth, email, password);
-      console.log(result)
-      console.log(result.user)
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      console.log(result);
+      console.log(result.user);
       navigate("/");
     } catch (e) {
       console.log(e);
+      setError("Incorrect Username and Password");
     }
-    console.log(email, password);
+    // console.log(email, password);
   };
   const GoogleSignIn = async (e) => {
     e.preventDefault();
@@ -30,9 +37,9 @@ export const SignInPage = () => {
       navigate("/");
     } catch (error) {
       console.log(error);
+      setError("Incorrect Username and Password");
     }
   };
-  
 
   return (
     <div className="container mt-4">
@@ -46,6 +53,19 @@ export const SignInPage = () => {
       <h2 style={{ fontWeight: 150, textAlign: "center" }}>
         Sign in To ChitChatApp
       </h2>
+      {error ? (
+        <div
+          className="alert alert-danger"
+          style={{
+            margin: "auto",
+            textAlign: "center",
+            width: 450,
+            height: 60,
+          }}
+        >
+          <p>{error}</p>
+        </div>
+      ) : null}
       <div
         className="card mt-4"
         style={{
@@ -87,14 +107,14 @@ export const SignInPage = () => {
             >
               Sign In
             </button>
-           <h5 className="text-center mt-2">OR</h5>
+            <h5 className="text-center mt-2">OR</h5>
             <div>
-            <button
-              className="btn btn-danger form-control mt-2"
-              onClick={GoogleSignIn}
-            >
-              Sign In with Google
-            </button>
+              <button
+                className="btn btn-danger form-control mt-2"
+                onClick={GoogleSignIn}
+              >
+                Sign In with Google
+              </button>
             </div>
           </form>
         </div>
