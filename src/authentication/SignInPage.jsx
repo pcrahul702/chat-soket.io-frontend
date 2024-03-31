@@ -10,8 +10,8 @@ import {
 } from "firebase/auth";
 export const SignInPage = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const SignIn = async (e) => {
     e.preventDefault();
