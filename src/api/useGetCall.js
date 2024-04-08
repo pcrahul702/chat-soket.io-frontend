@@ -9,7 +9,6 @@ export const useGetCall = (url,defaultValue) => {
     const loadData=async ()=>{
         const user=getAuth().currentUser;
       let token  =await user.getIdToken()
-        console.log("token",typeof(token))
         const response=await fetch(url,{
             headers:{
                 AuthToken:await user.getIdToken()
